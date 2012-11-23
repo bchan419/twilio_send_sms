@@ -1,4 +1,6 @@
-<h1>Listing users</h1>
+<h1>Users list</h1>
+
+<%= notice %>
 
 <table>
   <tr>
@@ -15,6 +17,13 @@
     <td><%= user.phone_no %></td>
     <td><%= link_to 'Show', user %></td>
     <td><%= link_to 'Edit', edit_user_path(user) %></td>
+    <td><%= link_to 'Edit', edit_user_path(user) %></td>
+    <td>
+	  <%= form_tag send_sms_path(user.id), method: 'post' do %>
+	    <%= hidden_field_tag "user_id", user.id %>
+	    <%= submit_tag 'Send SMS' %>
+		<% end %>
+		</td>
     <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
 <% end %>

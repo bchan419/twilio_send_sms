@@ -1,22 +1,28 @@
-require "net/http"
-require "uri"
-
-
 class SmsController < ApplicationController
 
-
   def sms_send
-    uri = URI.parse("http://google.com/")
+    
+    account_sid = ACCOUNT_SID
+    auth_token = AUTH_TOKEN
+    
+    logger.info "acct sid = #{account_sid}"
+    logger.info "token = #{auth_token}"
+    
+    client = Twilio::REST::Client.new account_sid, auth_token
+    my_phone_no = "+17542272668" # Your Twilio number
 
-    # Shortcut
-    response = Net::HTTP.get_response(uri)
+    user = User.find_by_id(params[:user_id])
+    name = user.name
+    phone_no = user.phone_no
 
-    # Will print response.body
-    Net::HTTP.get_print(uri)
-
-    # Full
-    http = Net::HTTP.new(uri.host, uri.port)
-    response = http.request(Net::HTTP::Get.new(uri.request_uri))  
+    client.account.sms.messages.create(
+        :from => my_phone_no,
+        :to => phone_no,
+        :body => "Hey #{name}, your load is done.\nThanks for using LaundryAlert."
+    ) 
+    
+    redirect_to users_path, notice: "Message sent to #{name} successfully."    
+  end
   
   
 end

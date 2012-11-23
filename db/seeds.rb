@@ -10,8 +10,10 @@
 User.destroy_all
 
 users = [
-  {:name => "Bernard Chan", :phone_no => "3125618713"},  
-  {:name => "Ashley Wrobel", :phone_no => "7086422682"}
+  {:name => "Bernard Chan",  :phone_no => "+13125618713"},  
+  {:name => "Ashley Wrobel", :phone_no => "+17086422682"},
+  {:name => "Travis Topham", :phone_no => "+14356680144"},
+  {:name => "Daniel Lopes", :phone_no => "+19543480295"}
 ]
 
 User.create users
